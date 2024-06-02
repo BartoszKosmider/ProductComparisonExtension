@@ -1,0 +1,62 @@
+body {
+  min-width: 370px;
+}
+
+.label-container {
+  display: flex;
+
+  .site {
+    min-width: 80px;
+  }
+  .product {
+    min-width: 180px;
+  }
+}
+
+.product-site {
+  max-width: 70px;
+}
+
+.product-value {
+  max-width: 50px;
+}
+
+.delete-button {
+  background-color: red;
+  color: white;
+  font-weight: 800;
+  border: none;
+  border-radius: 4px;
+}
+
+.delete-button:hover {
+  cursor: pointer;
+}
+
+.label-shop-comparsion {
+  display: flex;
+}
+
+.site-name {
+  display: inline-block;
+  width: 250px;
+  overflow: hidden;
+}
+
+#add-new-product {
+  background-color: #7ac81b;
+  border: none;
+  color: white;
+  padding: 5px;
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  margin: 10px auto;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+#sites-container {
+  overflow-y: scroll;
+  max-height: 200px;
+}

@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Products Comparsion Extension",
+  "version": "1.0.0",
+  "description": "A simple product price comparer :)",
+  "author": "Bartosz Kośmider",
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "tabs"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Products Comparsion Extension"
+  }
+}
