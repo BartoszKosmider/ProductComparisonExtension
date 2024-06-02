@@ -6,34 +6,60 @@ chrome.contextMenus.create({
   },
 );
 
+function getProductIndex(products) {
+  return products.length === 0 
+    ? 0 
+    : Math.max(...products.map(p => p.id));
+}
+
+function getSiteName(info) {
+  let siteName = '';
+  let pattern = /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))/i;
+  
+  if (info?.pageUrl) {
+    const url = info.pageUrl;
+    let result = url.match(pattern);
+    if (result && result.length === 3) {
+      siteName = result[2];
+    }
+  }
+
+  return siteName;
+}
+
+function getProductName(info) {
+  if (!info || !info.pageUrl || info.pageUrl.length == 0) {
+    return '';
+  }
+
+  var stringLength = info.pageUrl.length;
+  var pageUrl = info.pageUrl;
+  if (pageUrl.charAt(stringLength - 1) == '/') {
+    pageUrl = pageUrl.substring(0, stringLength - 1);
+  }
+
+  var lastIndex = pageUrl.lastIndexOf('/') + 1;
+  var productName = pageUrl.substring(lastIndex);
+
+  console.log(productName, 'xdxd');
+
+  return productName;
+}
+
 chrome.contextMenus.onClicked.addListener(
   async (info) => {
-    console.log('info', info)
     const data = await chrome.storage.local.get(["products"]);
     if (data && data.products) {
-      console.log(data)
       const products = JSON.parse(data.products);
-      const productIndex = products.length === 0 
-        ? 0 
-        : Math.max(...products.map(p => p.id));
+      const productIndex = getProductIndex(products);
 
-      const stringValue = info?.selectionText?.replace(/\s/g, '')?.replace(',', '.');
-      const productValue = isNaN(stringValue) ? '' : Number(stringValue);
-      let siteName = '';
-      let pattern = /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))/i;
-      if (info?.pageUrl) {
-        const url = info.pageUrl;
-        let result = url.match(pattern);
-        if (result && result.length === 3) {
-          siteName = result[2];
-        }
-      }
+      const valueAsString = info?.selectionText?.replace(/\s/g, '')?.replace(',', '.');
+      const productValue = isNaN(valueAsString) ? '' : Number(valueAsString);
 
-      console.log('add', productValue, siteName, stringValue);
       products.push({
         id: productIndex + 1,
-        productName: '',
-        site: siteName,
+        productName: getProductName(info),
+        site: getSiteName(info),
         value: productValue,
       });
 

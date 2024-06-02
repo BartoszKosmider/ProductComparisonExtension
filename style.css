@@ -4,6 +4,7 @@ body {
 
 .label-container {
   display: flex;
+  font-weight: 700;
 
   .site {
     min-width: 80px;
@@ -43,8 +44,7 @@ body {
   overflow: hidden;
 }
 
-#add-new-product {
-  background-color: #7ac81b;
+.action-button {
   border: none;
   color: white;
   padding: 5px;
@@ -54,6 +54,14 @@ body {
   margin: 10px auto;
   cursor: pointer;
   border-radius: 4px;
+}
+
+#remove-all {
+  background-color: red;
+}
+
+#add-new-product {
+  background-color: #7ac81b;
 }
 
 #sites-container {

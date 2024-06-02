@@ -17,10 +17,20 @@ async function deleteItem(productId) {
     productDiv.remove();
     refresh();
     calculate();
-    // localStorage['products'] = JSON.stringify(products);
     await chrome.storage.local.set({'products': JSON.stringify(products)});
   }
 }
+
+document.querySelector('#remove-all').addEventListener('click', async function(event) {
+  event.stopPropagation();
+  products = [];
+  let productsContainer = document.getElementById('product-container');
+  productsContainer.innerHTML = '';
+  refresh();
+  calculate();
+  await chrome.storage.local.set({'products': JSON.stringify(products)});
+});
+
 
 function calculateDelegate() {
   return function(){
@@ -66,9 +76,7 @@ async function calculate() {
   });
 
   refreshSites(sites);
-  // localStorage['products'] = JSON.stringify(products);
   await chrome.storage.local.set({'products': JSON.stringify(products)});
-  // console.log('final', sites, products);
 }
 
 function refreshSites(sites) {
@@ -86,7 +94,6 @@ function refreshSites(sites) {
 }
 
 function addProduct(product) {
-  // console.log('addproduct', window.location.href);
   let productsContainer = document.getElementById('product-container');
   productsContainer.insertAdjacentHTML('beforeend', `
     <form id="product-${product.id}">
@@ -146,7 +153,6 @@ function refreshListeners() {
 }
 
 async function main() {
-  // const cache = localStorage["products"];
   const cache = await chrome.storage.local.get(['products']);
   if (cache && cache.products) {
     const arr = JSON.parse(cache.products);
